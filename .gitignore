@@ -380,7 +380,6 @@ FodyWeavers.xsd
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
-!.vscode/launch.json
 !.vscode/extensions.json
 *.code-workspace
 
@@ -396,3 +395,12 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+PaLMApiRest/.vscode/launch.json
+PaLMApiRest/.vscode/tasks.json
+VertexAIRest/.vscode/launch.json
+.gitignore
+VertexAIRest/.vscode/tasks.json
+VertexAISDK/.vscode/tasks.json
+VertexAISDK/.vscode/launch.json
+VertexAIRest/tensile-axiom-403416-3843df8cede8.json
+VertexAISDK/tensile-axiom-403416-3843df8cede8.json
