@@ -4,6 +4,6 @@ namespace GenAiBot.Services
 {
     public interface IGooglePaLMService
     {
-        PaLMBotViewModel Predict(string prompt);
+        Task<PaLMBotViewModel> PredictAsync(string prompt);
     }
 }

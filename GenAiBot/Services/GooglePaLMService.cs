@@ -1,43 +1,45 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+// Remember to add GOOGLE_APPLICATION_CREDENTIALS in launchSettings.json / launch.json file as env variable
+using System.Globalization;
 using GenAiBot.Config;
 using GenAiBot.Models;
 using Google.Cloud.AIPlatform.V1;
+using Google.Protobuf.WellKnownTypes;
 using Microsoft.Extensions.Options;
 
 namespace GenAiBot.Services
 {
     public class GooglePaLMService: IGooglePaLMService
     {
-        private readonly PaLMApiConfig _apiConfig;
+        private readonly AppConfig _appConfig;
 
-        public GooglePaLMService(IOptions<PaLMApiConfig> apiConfig) 
+        public GooglePaLMService(IOptions<AppConfig> appConfigOptions) 
         {
-            _apiConfig = apiConfig.Value;
+            _appConfig = appConfigOptions.Value;
         }
 
-        public PaLMBotViewModel Predict(string prompt)
+        public async Task<PaLMBotViewModel> PredictAsync(string prompt)
         {
-            var serviceClientBuilder = new PredictionServiceClientBuilder
+            PredictionServiceClientBuilder serviceClientBuilder = new PredictionServiceClientBuilder
             {
-                Endpoint = _apiConfig.RegionEndpoint
+                Endpoint = _appConfig.PaLMApiConfig.RegionEndpoint
             };
-
             PredictionServiceClient predictionServiceClient = serviceClientBuilder.Build();
             EndpointName endpoint = EndpointName.FromProjectLocationPublisherModel(
-                _apiConfig.Project, _apiConfig.Location, _apiConfig.Publisher, _apiConfig.Model);
+                _appConfig.PaLMApiConfig.Project, 
+                _appConfig.PaLMApiConfig.Location, 
+                _appConfig.PaLMApiConfig.Publisher, 
+                _appConfig.PaLMApiConfig.Model);
+
             List<Google.Protobuf.WellKnownTypes.Value> instances = GetInstances(prompt);
             Google.Protobuf.WellKnownTypes.Value parameters = GetParameters();
-            PredictResponse response = predictionServiceClient.Predict(endpoint, instances, parameters);
-
+            
+            PredictResponse response = await predictionServiceClient.PredictAsync(endpoint, instances, parameters);
             string botMessage = response.Predictions[0].StructValue.Fields["content"].StringValue;
 
             return new PaLMBotViewModel
             {
-                BotName = "TestBot",
-                Slogan = "Test Slogan",
+                BotName = _appConfig.BotConfig.BotName,
+                Slogan = _appConfig.BotConfig.Slogan,
                 Message = botMessage,
                 Prompt = prompt
             };
@@ -45,12 +47,31 @@ namespace GenAiBot.Services
 
         private List<Google.Protobuf.WellKnownTypes.Value> GetInstances(string prompt)
         {
-            throw new NotImplementedException();
+            return new List<Google.Protobuf.WellKnownTypes.Value>
+            {
+                new Google.Protobuf.WellKnownTypes.Value
+                {
+                    StructValue = Struct.Parser.ParseJson($@"
+                            {{
+                                ""content"": ""{_appConfig.BotConfig.Context}\n\n input: {prompt}\n output:""
+                            }}")
+                }
+            };
         }
 
         private Google.Protobuf.WellKnownTypes.Value GetParameters()
         {
-            throw new NotImplementedException();
+            CultureInfo us = new CultureInfo("en-US", false);
+            return new Google.Protobuf.WellKnownTypes.Value()
+            {
+                StructValue = Struct.Parser.ParseJson($@"
+                {{
+                    ""temperature"": {_appConfig.ParameterConfig.Temperature.ToString(us)},
+                    ""maxOutputTokens"": {_appConfig.ParameterConfig.MaxOutputTokens},
+                    ""topP"": {_appConfig.ParameterConfig.TopP.ToString(us)},
+                    ""topK"": {_appConfig.ParameterConfig.TopK}
+                }}")
+            };
         }
     }
 }
