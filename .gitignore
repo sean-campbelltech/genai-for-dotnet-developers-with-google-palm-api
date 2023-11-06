@@ -395,12 +395,15 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-PaLMApiRest/.vscode/launch.json
-PaLMApiRest/.vscode/tasks.json
-VertexAIRest/.vscode/launch.json
+
+GenAiBot/appsettings.Development.json
+GenAiBot/tensile-axiom-403416-3843df8cede8.json
+IntegrationOptions/PaLMApiRest/.vscode/launch.json
+IntegrationOptions/PaLMApiRest/.vscode/tasks.json
+IntegrationOptions/VertexAIRest/.vscode/launch.json
+IntegrationOptions/VertexAIRest/.vscode/tasks.json
+IntegrationOptions/VertexAIRest/tensile-axiom-403416-3843df8cede8.json
+IntegrationOptions/VertexAISDK/.vscode/launch.json
+IntegrationOptions/VertexAISDK/.vscode/tasks.json
 .gitignore
-VertexAIRest/.vscode/tasks.json
-VertexAISDK/.vscode/tasks.json
-VertexAISDK/.vscode/launch.json
-VertexAIRest/tensile-axiom-403416-3843df8cede8.json
-VertexAISDK/tensile-axiom-403416-3843df8cede8.json
+IntegrationOptions/VertexAISDK/tensile-axiom-403416-3843df8cede8.json

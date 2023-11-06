@@ -42,5 +42,5 @@ static void PredictTextPrompt(IEnumerable<Google.Protobuf.WellKnownTypes.Value> 
     EndpointName endpoint = EndpointName.FromProjectLocationPublisherModel(PROJECT, LOCATION, PUBLISHER, MODEL);
     PredictResponse response = predictionServiceClient.Predict(endpoint, instances, parameters);
 
-    Console.WriteLine(response.Predictions.ToString());
+    Console.WriteLine(response.Predictions[0].StructValue.Fields["content"]);
 }
