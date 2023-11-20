@@ -32,8 +32,8 @@ internal class Program
                     {
                         candidateCount = Convert.ToInt32(GetEnv("CANDIDATE_COUNT")),
                         maxOutputTokens = Convert.ToInt32(GetEnv("MAX_OUTPUT_TOKENS")),
-                        temperature = Convert.ToDecimal(GetEnv("TEMPERATURE")),
-                        topP = Convert.ToDecimal(GetEnv("TOP-P")),
+                        temperature = Convert.ToDouble(GetEnv("TEMPERATURE")),
+                        topP = Convert.ToDouble(GetEnv("TOP-P")),
                         topK = Convert.ToInt32(GetEnv("TOP-K"))
                     }
                 }),
@@ -65,7 +65,7 @@ internal class Program
     {
         try
         {
-            using StreamReader reader = new StreamReader("examples.json");
+            using StreamReader reader = new("examples.json");
             JsonDocument jsonDocument = JsonDocument.Parse(reader.ReadToEnd());
             JsonElement root = jsonDocument.RootElement;
             StringBuilder inputOutputInstances = new();
