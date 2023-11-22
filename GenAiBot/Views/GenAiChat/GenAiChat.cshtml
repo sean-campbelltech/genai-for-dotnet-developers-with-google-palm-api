@@ -17,7 +17,21 @@
             <div class="card mt-3">
                 <div class="card-body">
                     <div id="chat-box" class="output" data-simplebar>
-                        <p class="text-white">@Html.Raw(Model.Message)</p>
+                        @foreach (var message in Model.ChatHistory)
+                            {
+                                <div class="@(message.Author == "user" ? "text-right mb-2" : "")">
+                                    @if (message.Author == "user")
+                                    {
+                                        <strong>You:</strong> <span>@message.Content</span>
+                                    }
+                                    else
+                                    {
+                                        <div id="bot-message" class="mb-2">
+                                            <strong>Bot:</strong> <span>@message.Content</span>
+                                        </div>
+                                    }
+                                </div>
+                            }
                         <div class="chat-bubble d-none" id="typing-dots">
                             <div class="typing">
                               <div class="dot"></div>

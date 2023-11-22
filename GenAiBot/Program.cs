@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.Configure<AppConfig>(builder.Configuration.GetSection(nameof(AppConfig)));
-builder.Services.AddScoped<IGooglePaLMService, GooglePaLMService>();
+builder.Services.AddSingleton<IVertexAiService, VertexAiService>();
 
 var app = builder.Build();
 
@@ -27,6 +27,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=PaLMBot}/{action=Intro}");
+    pattern: "{controller=GenAiChat}/{action=Intro}");
 
 app.Run();
