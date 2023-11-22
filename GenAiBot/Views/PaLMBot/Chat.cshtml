@@ -2,35 +2,55 @@
     ViewData["Title"] = "PaLM Bot"; // Set your page title here
 }
 
-<div class="m-3 p-4 bg-secondary text-white">
-    <div class="container">
-        <h1 class="text-white">@Model.BotName</h1>
-        <h2 class="text-white">@Model.Slogan</h2>
-    </div>
-</div>
-<div class="container p-3">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card mt-3" style="background-color: #5d5d5d;">
-                <div class="card-body" style="background-color: #212529; border: 0px;">
-                    <div class="output" style="height: 500px; overflow-y: auto; background-color: #212529; color: white;">
+<div class="container p-1">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="container">
+                <div class="d-flex align-items-center">
+                    <img src="@Url.Content("~/images/bot_icon.png")" alt="Bot Icon" class="mr-2" />
+                    <div>
+                        <h3 id="bot-name" class="text-white">@Model.BotName</h1>
+                        <h5 id="slogan" class="text-white">@Model.Slogan</h2>
+                    </div>
+                </div>
+            </div>  
+            <div class="card mt-3">
+                <div class="card-body">
+                    <div id="chat-box" class="output" data-simplebar>
                         <p class="text-white">@Html.Raw(Model.Message)</p>
+                        <div class="chat-bubble d-none" id="typing-dots">
+                            <div class="typing">
+                              <div class="dot"></div>
+                              <div class="dot"></div>
+                              <div class="dot"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            <form method="POST" asp-action="Chat" class="d-flex">
+                <input type="text" autocomplete="off" id="user-prompt" name="prompt" class="form-control mt-3 mr-2" placeholder="Enter a prompt" class="form-control">
+                <button type="submit" id="submit-button" class="btn btn-secondary mt-3">
+                    <img src="@Url.Content("~/images/send_button.png")" alt="Send Button" class="mr-2">
+                </button>
+            </form>
         </div>
     </div>
 
-    <form method="post" asp-action="Chat">
-        <input type="text" autocomplete="off" name="prompt" class="form-control mt-3" placeholder="Enter a prompt" class="form-control">
-        <button type="submit" id="submit-button" class="btn btn-secondary mt-3">
-            Submit
-            <span class="spinner-border spinner-border-sm d-none" id="spinner" role="status" aria-hidden="true"></span>
-        </button>
-    </form>
+    
 </div>
 <script>
-    document.getElementById('submit-button').addEventListener('click', function () {
-        document.getElementById('spinner').classList.remove('d-none');
+     document.getElementById('submit-button').addEventListener('click', function() {
+        document.getElementById('typing-dots').classList.remove('d-none');
+        scrollToBottom();
     });
+
+    window.onload = function() {
+        scrollToBottom();
+    }
+
+    function scrollToBottom() {
+        var container = document.querySelector('#chat-box .simplebar-content-wrapper'); 
+        container.scrollTo({ top: container.scrollHeight });
+    }
 </script>
