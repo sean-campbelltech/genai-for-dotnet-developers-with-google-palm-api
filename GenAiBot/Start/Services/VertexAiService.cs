@@ -13,7 +13,6 @@ namespace GenAiBot.Services
     public class VertexAiService: IVertexAiService
     {
         private readonly AppConfig _appConfig;
-        private readonly List<ChatHistory> _history = new List<ChatHistory>();
 
         public VertexAiService(IOptions<AppConfig> appConfigOptions) 
         {
@@ -43,26 +42,8 @@ namespace GenAiBot.Services
 
         private GenAiChatViewModel BuildChatMessage(string prompt, PredictResponse predictResponse)
         {
-            string botMessage;
-            if (predictResponse != null && predictResponse.Predictions.Count > 0) 
-            {
-                botMessage = predictResponse.Predictions[0]
-                        .StructValue.Fields["candidates"]
-                        .ListValue.Values[0]
-                        .StructValue.Fields["content"]
-                        .StringValue;
-            } 
-            else 
-            {
-                botMessage = "The LLM did not provide a response";
-            }
-            _history.Add(new ChatHistory("user", prompt));
-            _history.Add(new ChatHistory("bot", botMessage));
-            
-            return new GenAiChatViewModel(
-                _appConfig.BotConfig.BotName, 
-                _appConfig.BotConfig.Slogan, 
-                _history);
+            // TODO: Complete implementation of BuildChatMessage()            
+            return new GenAiChatViewModel();
         }
 
         private dynamic[] GetExamples()

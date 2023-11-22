@@ -412,3 +412,9 @@ GenAiBot/.vscode/tasks.json
 IntegrationOptions/VertexAIRest/tensile-axiom-403416-2e0f45e7db68.json
 IntegrationOptions/VertexAISDK/tensile-axiom-403416-2e0f45e7db68.json
 GenAiBot/tensile-axiom-403416-2e0f45e7db68.json
+GenAiBot/End/.vscode/launch.json
+GenAiBot/End/.vscode/tasks.json
+GenAiBot/End/appsettings.Local.json
+GenAiBot/End/tensile-axiom-403416-2e0f45e7db68.json
+GenAiBot/Start/.vscode/launch.json
+GenAiBot/Start/.vscode/tasks.json

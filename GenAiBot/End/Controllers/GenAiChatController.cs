@@ -22,13 +22,8 @@ namespace GenAiBot.Controllers
         [HttpPost]
         public async Task<IActionResult> Chat(string prompt)
         {
-            GenAiChatViewModel model = await PredictAsync(prompt);
+            GenAiChatViewModel model = await _palmService.PredictAsync(prompt);
             return View("GenAiChat", model);
-        }
-
-        public async Task<GenAiChatViewModel> PredictAsync(string prompt)
-        {
-            return await _palmService.PredictAsync(prompt);
         }
     }
 }
