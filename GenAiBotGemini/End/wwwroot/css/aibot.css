@@ -1,0 +1,161 @@
+/* Add general styling for the container and columns */
+.container {
+    margin-top: 20px;
+}
+
+.col-md-8 {
+    margin-top: auto;
+}
+
+/* Styling for the card */
+.card {
+    background-color: #2a2a2a;
+    border-radius: 25px;
+}
+
+.card-body {
+    background-color: #2a2a2a;
+    border: 0;
+    border-radius: 25px;
+}
+
+/* Styling for the chat box */
+#chat-box {
+    height: 500px;
+    overflow-y: auto;
+    background-color: #2a2a2a;
+    color: lightgray;
+}
+
+/* Styling for user messages */
+.text-right.mb-2 {
+    overflow-wrap: break-word;
+    border-radius: 15px;
+    padding: 15px;
+    margin-right: 20px;
+}
+
+/* Styling for bot messages */
+#bot-message {
+    background-color: #c6d4f4;
+    color: #2a2a2a;
+    overflow-wrap: break-word;
+    border-radius: 15px;
+    padding: 15px;
+    margin-right: 20px;
+}
+
+/* Styling for the form */
+form {
+    margin-top: 10px;
+}
+
+/* Styling for the input */
+.form-control {
+    background-color: #2a2a2a;
+    color: lightgray;
+    margin-right: 5px;
+    border-radius: 20px;
+    padding: 15px;
+    border-color: #4a4a4a;
+}
+
+/* Styling for the submit button */
+#submit-button {
+    background-color: transparent;
+    color: lightgray;
+    border: none;
+}
+
+/* Styling for the spinner */
+#spinner {
+    width: 30px;
+    height: 30px;
+}
+
+/* Additional styling for the bot info section */
+.d-flex.align-items-center img {
+    padding-right: 20px;
+    width: 70px;
+}
+
+.d-flex.align-items-center div h3.text-white {
+    margin-top: 20px;
+}
+
+#bot-name {
+    margin-top: 10px;
+}
+
+#slogan {
+    margin-top: 5px;
+}
+
+.d-flex.align-items-center div h5.text-white {
+    margin-top: 20px;
+}
+
+.form-control:focus {
+    background-color: #2a2a2a;
+    color: lightgray
+}
+
+.chat-bubble {
+    background-color:#c6d4f4;
+    padding:16px 28px;
+    -webkit-border-radius: 20px;
+    -webkit-border-bottom-left-radius: 2px;
+    -moz-border-radius: 20px;
+    -moz-border-radius-bottomleft: 2px;
+    border-radius: 20px;
+    border-bottom-left-radius: 2px;
+    display:inline-block;
+  }
+
+.typing {
+    align-items: center;
+    display: flex;
+    height: 17px;
+  }
+
+ .typing .dot {
+    animation: mercuryTypingAnimation 1.8s infinite ease-in-out;
+    background-color: #2a2a2a;
+    border-radius: 50%;
+    height: 7px;
+    margin-right: 4px;
+    vertical-align: middle;
+    width: 7px;
+    display: inline-block;
+  }
+
+.typing .dot:nth-child(1) {
+    animation-delay: 200ms;
+  }
+
+.typing .dot:nth-child(2) {
+    animation-delay: 300ms;
+  }
+
+.typing .dot:nth-child(3) {
+    animation-delay: 400ms;
+  }
+
+.typing .dot:last-child {
+    margin-right: 0;
+  }
+  
+@keyframes mercuryTypingAnimation {
+    0% {
+      transform: translateY(0px);
+      background-color:#000000; 
+    }
+    28% {
+      transform: translateY(-7px);
+      background-color:#3d3d3d;
+    }
+    44% {
+      transform: translateY(0px);
+      background-color: #6a6a6a; 
+    }
+}
