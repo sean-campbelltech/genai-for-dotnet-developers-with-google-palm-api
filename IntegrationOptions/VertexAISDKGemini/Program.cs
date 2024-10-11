@@ -27,23 +27,22 @@ internal class Program
 
     private static void Main(string[] args)
     {
-        var predictionServiceClient = new PredictionServiceClientBuilder
+        PredictionServiceClient predictionServiceClient = new PredictionServiceClientBuilder
         {
             Endpoint = $"{LOCATION}-aiplatform.googleapis.com",
             ChannelCredentials = GetCredentials(SERVICE_ACCOUNT_FILE_PATH)
         }.Build();
 
-        var generateContentRequest = new GenerateContentRequest
+        GenerateContentRequest generateContentRequest = new GenerateContentRequest
         {
             Model = $"projects/{PROJECT_ID}/locations/{LOCATION}/publishers/{PUBLISHER}/models/{MODEL_ID}",
             Contents = { BuildContents() }
         };
 
         GenerateContentResponse response = predictionServiceClient.GenerateContent(generateContentRequest);
+        string modelResponse = response?.Candidates.FirstOrDefault()?.Content?.Parts?.FirstOrDefault()?.Text ?? "No Response";
 
-        Console.WriteLine(
-            response?.Candidates.FirstOrDefault()?.Content?.Parts?.FirstOrDefault()?.Text ?? "No Response"
-                );
+        Console.WriteLine(modelResponse);
 
         Main(args);
     }
