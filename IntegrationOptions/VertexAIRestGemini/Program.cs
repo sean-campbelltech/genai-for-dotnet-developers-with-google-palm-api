@@ -45,6 +45,29 @@ internal class Program
                         maxOutputTokens = Convert.ToInt32(GetEnv("MAX_OUTPUT_TOKENS")),
                         topP = Convert.ToDouble(GetEnv("TOP-P")),
                         seed = Convert.ToInt32(GetEnv("SEED"))
+                    },
+                    safetySettings = new[]
+                    {
+                        new
+                        {
+                            category = "HARM_CATEGORY_HATE_SPEECH",
+                            threshold = "OFF"
+                        },
+                        new
+                        {
+                            category = "HARM_CATEGORY_DANGEROUS_CONTENT",
+                            threshold = "OFF"
+                        },
+                        new
+                        {
+                            category = "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                            threshold = "OFF"
+                        },
+                        new
+                        {
+                            category = "HARM_CATEGORY_HARASSMENT",
+                            threshold = "OFF"
+                        }
                     }
                 }),
                 Encoding.UTF8,
