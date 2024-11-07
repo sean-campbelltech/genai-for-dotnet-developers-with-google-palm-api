@@ -12,6 +12,7 @@ internal class Program
     private static void Main(string[] args)
     {
         string API_KEY = Environment.GetEnvironmentVariable("API_KEY");
+        string MODEL_ID = Environment.GetEnvironmentVariable("MODEL_ID");
 
         Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
         using (HttpClient client = new())
@@ -20,6 +21,34 @@ internal class Program
                 JsonSerializer.Serialize(new
                 {
                     contents = BuildContent(),
+                    safetySettings = new[]
+                    {
+                        new
+                        {
+                            category = "HARM_CATEGORY_HARASSMENT",
+                            threshold = "BLOCK_MEDIUM_AND_ABOVE"
+                        },
+                        new
+                        {
+                            category = "HARM_CATEGORY_HATE_SPEECH",
+                            threshold = "BLOCK_MEDIUM_AND_ABOVE"
+                        },
+                        new
+                        {
+                            category = "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                            threshold = "BLOCK_MEDIUM_AND_ABOVE"
+                        },
+                        new
+                        {
+                            category = "HARM_CATEGORY_DANGEROUS_CONTENT",
+                            threshold = "BLOCK_MEDIUM_AND_ABOVE"
+                        },
+                        new
+                        {
+                            category = "HARM_CATEGORY_CIVIC_INTEGRITY",
+                            threshold = "BLOCK_MEDIUM_AND_ABOVE"
+                        }
+                    },
                     generationConfig = new
                     {
                         temperature = Convert.ToDouble(GetEnv("TEMPERATURE")),
@@ -32,7 +61,7 @@ internal class Program
                 "application/json");
 
             HttpResponseMessage response = client.PostAsync(
-                $"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={API_KEY}",
+                $"https://generativelanguage.googleapis.com/v1beta/models/{MODEL_ID}:generateContent?key={API_KEY}",
                 jsonRequestBody
             ).Result;
 
