@@ -15,6 +15,7 @@ using Grpc.Auth;
 using Grpc.Core;
 using Google.Protobuf.Collections;
 using VertexAISDKGemini;
+using System.Globalization;
 
 internal class Program
 {
@@ -22,7 +23,6 @@ internal class Program
     private static string PROJECT_ID = GetEnv("PROJECT_ID");
     private static string MODEL_ID = GetEnv("MODEL_ID");
     private static string PUBLISHER = GetEnv("PUBLISHER");
-    private static string CONTEXT = GetEnv("CONTEXT");
     private static string SERVICE_ACCOUNT_FILE_PATH = GetEnv("SERVICE_ACCOUNT_FILE_PATH");
 
     private static void Main(string[] args)
@@ -36,7 +36,22 @@ internal class Program
         GenerateContentRequest generateContentRequest = new GenerateContentRequest
         {
             Model = $"projects/{PROJECT_ID}/locations/{LOCATION}/publishers/{PUBLISHER}/models/{MODEL_ID}",
-            Contents = { BuildContents() }
+            Contents = { BuildContents() },
+            GenerationConfig = new GenerationConfig
+            {
+                CandidateCount = Convert.ToInt32(GetEnv("CANDIDATE_COUNT")),
+                Temperature = float.Parse(GetEnv("TEMPERATURE"), CultureInfo.GetCultureInfo("en-US")),
+                MaxOutputTokens = Convert.ToInt32(GetEnv("MAX_OUTPUT_TOKENS")),
+                TopP = float.Parse(GetEnv("TOP-P"), CultureInfo.GetCultureInfo("en-US")),
+                Seed = Convert.ToInt32(GetEnv("SEED"))
+            },
+            SystemInstruction = new Content
+            {
+                Parts =
+                {
+                    new Part { Text = GetEnv("CONTEXT") }
+                }
+            }
         };
 
         GenerateContentResponse response = predictionServiceClient.GenerateContent(generateContentRequest);
@@ -62,7 +77,6 @@ internal class Program
     private static RepeatedField<Content> BuildContents()
     {
         string jsonContent = File.ReadAllText("contents.json")
-            .Replace("{CONTEXT}", CONTEXT)
             .Replace("{USER_PROMPT}", GetPrompt());
 
         List<MessageContent> messageContentList = JsonSerializer.Deserialize<List<MessageContent>>(jsonContent);

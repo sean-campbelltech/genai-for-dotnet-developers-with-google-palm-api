@@ -1,14 +1,6 @@
 [
     {
         "Role": "USER",
-        "Text": "{CONTEXT}"
-    },
-    {
-        "Role": "MODEL",
-        "Text": "Understood."
-    },
-    {
-        "Role": "USER",
         "Text": "I want to start investing but I am hesitant about the market volatility."
     },
     {
